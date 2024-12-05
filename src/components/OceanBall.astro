@@ -1,16 +1,9 @@
 ---
-// fichier : src/components/OceanBall.astro
-
 import OceanStats from './OceanStats.astro'; // Importation du composant OceanStats
 
 const { ocean } = Astro.props;
 
-let showStats = false; // État interne pour afficher/masquer les statistiques
-
-// Extraire le taux de pollution de l'objet ocean
 const tauxDePollution = ocean.tauxDePollution;
-
-// Convertir le taux de pollution en nombre
 const pollutionNumber = parseInt(tauxDePollution, 10);
 
 // Fonction pour déterminer la couleur en fonction du taux de pollution
@@ -25,27 +18,23 @@ const getBallColor = (pollution: number) => {
 
 const ballColor = getBallColor(pollutionNumber);
 const idt = "pollutionBall" + ocean.id; // Identifiant unique pour chaque ballon
-
 ---
 
-<!-- Utilisation de la syntaxe Astro pour insérer dynamiquement l'ID -->
 <div id={idt} class="pollution-ball" style={`background-color: ${ballColor};`} onclick={`toggleStats('${idt}')`}></div>
 
 <div id={`stats-${idt}`} class="ocean-stats" style="display: none;">
-  {showStats && <OceanStats ocean={ocean} />}
+  <OceanStats ocean={ocean} />
 </div>
 
 <script type="module">
-  // JavaScript côté client pour écouter l'événement de clic
   document.addEventListener('DOMContentLoaded', () => {
     // Fonction pour basculer l'affichage des statistiques
     window.toggleStats = (idt) => {
-      console.log('stats-' + idt);  // Logguer l'ID de l'élément
-
-      const statsContainer = document.getElementById('stats-' + idt);  // Correctement cibler l'élément avec l'ID dynamique
+      const statsContainer = document.getElementById('stats-' + idt);  // Cibler l'élément avec l'ID dynamique
       if (statsContainer) {
         const currentDisplay = statsContainer.style.display;
-        statsContainer.style.display = currentDisplay === 'none' ? 'block' : 'none';  // Bascule l'affichage
+        // Bascule l'affichage
+        statsContainer.style.display = currentDisplay === 'none' ? 'block' : 'none';
       }
     };
   });
