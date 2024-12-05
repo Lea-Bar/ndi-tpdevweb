@@ -6,7 +6,7 @@ export const oceans = [
       temperature: "25°C",
       superficie: "168,72 millions km²",
       lien: "https://example.com/ocean-pacifique",
-      tauxDePollution: "30", // Exemple de taux de pollution
+      tauxDePollution: "91", // Exemple de taux de pollution
     },
     {
       id: 1,
@@ -22,7 +22,7 @@ export const oceans = [
       temperature: "22°C",
       superficie: "70,56 millions km²",
       lien: "https://example.com/ocean-indien",
-      tauxDePollution: "20", // Exemple de taux de pollution
+      tauxDePollution: "80", // Exemple de taux de pollution
     },
     {
       id: 3,
