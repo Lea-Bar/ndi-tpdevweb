@@ -1,16 +1,9 @@
 ---
-// fichier : src/components/OceanBall.astro
-
 import OceanStats from './OceanStats.astro'; // Importation du composant OceanStats
 
 const { ocean } = Astro.props;
 
-let showStats = false; // État interne pour afficher/masquer les statistiques
-
-// Extraire le taux de pollution de l'objet ocean
 const tauxDePollution = ocean.tauxDePollution;
-
-// Convertir le taux de pollution en nombre
 const pollutionNumber = parseInt(tauxDePollution, 10);
 
 // Fonction pour déterminer la couleur en fonction du taux de pollution
@@ -24,27 +17,26 @@ const getBallColor = (pollution: number) => {
 };
 
 const ballColor = getBallColor(pollutionNumber);
-
+const idt = "pollutionBall" + ocean.id; // Identifiant unique pour chaque ballon
 ---
 
-<div id="pollutionBall" class="pollution-ball" style={`background-color: ${ballColor};`}></div>
+<div id={idt} class="pollution-ball" style={`background-color: ${ballColor};`} onclick={`toggleStats('${idt}')`}></div>
 
-{showStats && <OceanStats ocean={ocean} />}
+<div id={`stats-${idt}`} class="ocean-stats" style="display: none;">
+  <OceanStats ocean={ocean} />
+</div>
 
 <script type="module">
-  // JavaScript côté client pour écouter l'événement de clic
   document.addEventListener('DOMContentLoaded', () => {
-    const ball = document.getElementById('pollutionBall');
-    let showStats = false; // Variable pour basculer l'état
-
-    if (ball) {
-      ball.addEventListener('click', () => {
-        showStats = !showStats;
-        console.log(ball+" "+showStats);
-        // Met à jour l'affichage des statistiques en fonction du nouvel état
-        document.querySelector('ocean-stats').style.display = showStats ? 'block' : 'none';
-      });
-    }
+    // Fonction pour basculer l'affichage des statistiques
+    window.toggleStats = (idt) => {
+      const statsContainer = document.getElementById('stats-' + idt);  // Cibler l'élément avec l'ID dynamique
+      if (statsContainer) {
+        const currentDisplay = statsContainer.style.display;
+        // Bascule l'affichage
+        statsContainer.style.display = currentDisplay === 'none' ? 'block' : 'none';
+      }
+    };
   });
 </script>
 
@@ -58,10 +50,17 @@ const ballColor = getBallColor(pollutionNumber);
   }
 
   .ocean-stats {
+    border-radius: 20px;
     padding: 20px;
     background-color: #f0f0f0;
     border: 1px solid #ddd;
     margin-top: 10px;
+    height: 150px;
+    width: 250px;
+  }
+
+  .ocean-stats h3, p{
+    font-size: 20px;
   }
 
   .ocean-stats a {

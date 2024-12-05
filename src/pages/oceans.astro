@@ -13,7 +13,7 @@ import { oceans } from "../data/oceans.js"; // Assurez-vous que les données des
     <h1>Informations sur les Océans</h1>
     <ul>
       {oceans.map((ocean) => (
-        <li>  {/* Supprimer le key ici */}
+        <li>
           <h2>{ocean.nom}</h2>
           <PollutionBall ocean={ocean} />
         </li>
