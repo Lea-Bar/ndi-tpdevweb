@@ -24,27 +24,30 @@ const getBallColor = (pollution: number) => {
 };
 
 const ballColor = getBallColor(pollutionNumber);
+const idt = "pollutionBall" + ocean.id; // Identifiant unique pour chaque ballon
 
 ---
 
-<div id="pollutionBall" class="pollution-ball" style={`background-color: ${ballColor};`}></div>
+<!-- Utilisation de la syntaxe Astro pour insérer dynamiquement l'ID -->
+<div id={idt} class="pollution-ball" style={`background-color: ${ballColor};`} onclick={`toggleStats('${idt}')`}></div>
 
-{showStats && <OceanStats ocean={ocean} />}
+<div id={`stats-${idt}`} class="ocean-stats" style="display: none;">
+  {showStats && <OceanStats ocean={ocean} />}
+</div>
 
 <script type="module">
   // JavaScript côté client pour écouter l'événement de clic
   document.addEventListener('DOMContentLoaded', () => {
-    const ball = document.getElementById('pollutionBall');
-    let showStats = false; // Variable pour basculer l'état
+    // Fonction pour basculer l'affichage des statistiques
+    window.toggleStats = (idt) => {
+      console.log('stats-' + idt);  // Logguer l'ID de l'élément
 
-    if (ball) {
-      ball.addEventListener('click', () => {
-        showStats = !showStats;
-        console.log(ball+" "+showStats);
-        // Met à jour l'affichage des statistiques en fonction du nouvel état
-        document.querySelector('ocean-stats').style.display = showStats ? 'block' : 'none';
-      });
-    }
+      const statsContainer = document.getElementById('stats-' + idt);  // Correctement cibler l'élément avec l'ID dynamique
+      if (statsContainer) {
+        const currentDisplay = statsContainer.style.display;
+        statsContainer.style.display = currentDisplay === 'none' ? 'block' : 'none';  // Bascule l'affichage
+      }
+    };
   });
 </script>
 
