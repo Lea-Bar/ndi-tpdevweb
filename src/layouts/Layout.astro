@@ -5,7 +5,8 @@
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+		<link href="../style.css" rel="stylesheet"/>
+		<title></title>
 	</head>
 	<body>
 		<slot />
@@ -13,10 +14,44 @@
 </html>
 
 <style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
+	*{
+		font-family: Inter, Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif;
+		background-color: #4b5563;
+		color: ghostwhite;
+	}
+
+	main {
 		height: 100%;
+		display: flex;
+		justify-content: center;
+	}
+
+	#intro {
+		display: flex;
+		align-items: start;
+		flex-direction: column;
+		justify-content: center;
+		padding: 16px;
+	}
+
+	h1 {
+		font-size: 22px;
+		margin-top: 0.25em;
+		color: #d83333;
+	}
+
+	h2 {
+		margin: 0 0 1em;
+		font-weight: normal;
+		color: #111827;
+		font-size: 20px;
+	}
+
+	p {
+		color: #4b5563;
+		font-size: 16px;
+		line-height: 24px;
+		letter-spacing: -0.006em;
+		margin: 0;
 	}
 </style>
