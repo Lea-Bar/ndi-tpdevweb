@@ -1,25 +1,23 @@
 ---
-import { oceans } from "../data/oceans";
+// fichier : src/pages/OceanPage.astro
+
+import PollutionBall from "../components/OceanBall.astro";
+import { oceans } from "../data/oceans.js"; // Assurez-vous que les données des océans sont bien importées
 ---
 
 <html lang="fr">
   <head>
-    <title>Liste des Océans</title>
+    <title>Océans et Pollution</title>
   </head>
   <body>
-    <h1>Liste des Océans</h1>
-    {oceans.map((ocean) => (
-      <article>
-        <h2>{ocean.nom}</h2>
-        <p><strong>Température :</strong> {ocean.temperature}</p>
-        <p><strong>Superficie :</strong> {ocean.superficie}</p>
-        <p>
-          <strong>En savoir plus :</strong>
-          <a href={ocean.lien} target="_blank" rel="noopener noreferrer">
-            {ocean.lien}
-          </a>
-        </p>
-      </article>
-    ))}
+    <h1>Informations sur les Océans</h1>
+    <ul>
+      {oceans.map((ocean) => (
+        <li>  {/* Supprimer le key ici */}
+          <h2>{ocean.nom}</h2>
+          <PollutionBall ocean={ocean} />
+        </li>
+      ))}
+    </ul>
   </body>
 </html>
