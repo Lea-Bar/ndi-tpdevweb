@@ -1,0 +1,25 @@
+---
+import { oceans } from "../data/oceans";
+---
+
+<html lang="fr">
+  <head>
+    <title>Liste des Océans</title>
+  </head>
+  <body>
+    <h1>Liste des Océans</h1>
+    {oceans.map((ocean) => (
+      <article>
+        <h2>{ocean.nom}</h2>
+        <p><strong>Température :</strong> {ocean.temperature}</p>
+        <p><strong>Superficie :</strong> {ocean.superficie}</p>
+        <p>
+          <strong>En savoir plus :</strong>
+          <a href={ocean.lien} target="_blank" rel="noopener noreferrer">
+            {ocean.lien}
+          </a>
+        </p>
+      </article>
+    ))}
+  </body>
+</html>
