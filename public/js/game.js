@@ -81,7 +81,7 @@ function getRandomOcean(){
 }
 
 function addPollution(ocean) {
-    ocean.tauxDePollution = ocean.tauxDePollution + (Math.floor(Math.random() * (20 - 8 + 1)) + 8);
+    ocean.tauxDePollution = ocean.tauxDePollution + (Math.floor(Math.random() * (40 - 10 + 1)) + 10);
     if (ocean.tauxDePollution > 100) {
         ocean.tauxDePollution = 100;
     }
@@ -89,7 +89,7 @@ function addPollution(ocean) {
 }
 
 function removePollution(ocean) {
-    ocean.tauxDePollution = ocean.tauxDePollution - (Math.floor(Math.random() * (20 - 8 + 1)) + 8); // Subtracting pollution
+    ocean.tauxDePollution = ocean.tauxDePollution - (Math.floor(Math.random() * (40 - 10 + 1)) + 10); // Subtracting pollution
     if (ocean.tauxDePollution < 0) {
         ocean.tauxDePollution = 0; // Ensure pollution doesn't go below 0
     }

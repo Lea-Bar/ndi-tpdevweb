@@ -6,11 +6,11 @@ import QuestionModal from "../components/QuestionModal.astro";
 
 // Coordonnées pour chaque océan (index correspond à l'océan dans le tableau)
 const positions = [
-  { x: 50, y: 50 },
-  { x: 200, y: 150 },
-  { x: 400, y: 300 },
+  { x: 50, y: 400 },
   { x: 600, y: 450 },
-  { x: 800, y: 500 },
+  { x: 1200, y: 700 },
+  { x: 800, y: 650 },
+  { x: 900, y: 200 },
 ];
 
 ---
@@ -62,7 +62,7 @@ const positions = [
         position: absolute;
         top: 0;
         left: 50%;
-        transform: translateX(-50%);
+        transform: translateX(50%);
         color: white;
         font-weight: bold;
       }
