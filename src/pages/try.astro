@@ -1,6 +1,8 @@
 ---
 import PollutionBall from "../components/OceanBall.astro";
+import LifeBar from "../components/lifeBar.astro";
 import { oceans } from "../data/oceans.js"; // Liste des océans
+import { player } from "../data/player.js"; 
 
 // Coordonnées pour chaque océan (index correspond à l'océan dans le tableau)
 const positions = [
@@ -10,6 +12,7 @@ const positions = [
   { x: 600, y: 450 },
   { x: 800, y: 500 },
 ];
+
 ---
 
 <html lang="fr">
@@ -52,6 +55,7 @@ const positions = [
         );
       })}
     </div>
+    <LifeBar life={player.life} maxLife={player.maxLife} />
     <script>
         import { oceans } from "../data/oceans";
         
@@ -75,6 +79,7 @@ const positions = [
 
       setInterval(updateBackground, 200);
       setInterval(updateTextStatus, 2000);
+
       
       function updateBackground(){
         var polution = (oceans[0].tauxDePollution + oceans[1].tauxDePollution + oceans[2].tauxDePollution + oceans[3].tauxDePollution + oceans[4].tauxDePollution) / 5;
@@ -83,37 +88,54 @@ const positions = [
         }
       }
 
-      function updateTextStatus() {
-  // Parcourir chaque océan (index de 0 à 4)
-  for (let i = 0; i < oceans.length; i++) {
-    const el = document.getElementById(`pollutionBall${i}`);
-    if (el != null) {
-      // Mettre à jour la couleur de fond de l'élément en fonction du taux de pollution
-      el.style.backgroundColor = getBallColor(oceans[i].tauxDePollution);
+    function updateLifeBar(life, maxLife) {
+        const lifeBar = document.getElementById('life-bar');
+        const lifeBarText = document.getElementById('life-bar-text');
 
-      // Accéder à l'élément contenant les statistiques détaillées
-      const elStats = document.getElementById(`stats-pollutionBall${i}`);
-      if (elStats != null) {
-        // Mettre à jour la température dans l'élément <strong> de température
-        const temperatureElement = elStats.querySelector("p strong:nth-of-type(1)");
-        if (temperatureElement != null) {
-          temperatureElement.textContent = `Température : ${oceans[i].temperature}°C`;
-        }
+        if (lifeBar != null && lifeBarText != null) {
+            // Calcul du pourcentage de vie restante
+            const lifePercentage = (life / maxLife) * 100;
 
-        // Mettre à jour la superficie dans l'élément <strong> de superficie
-        const superficieElement = elStats.querySelector("p strong:nth-of-type(2)");
-        if (superficieElement != null) {
-          superficieElement.textContent = `Superficie : ${oceans[i].superficie} millions km²`;
-        }
+            // Mise à jour de la largeur de la barre de vie
+            lifeBar.style.width = `${lifePercentage}%`;
 
-        // Mettre à jour le taux de pollution dans l'élément <strong> du taux de pollution
-        const pollutionElement = elStats.querySelector("p strong:nth-of-type(3)");
-        if (pollutionElement != null) {
-          pollutionElement.textContent = `Taux de Pollution : ${oceans[i].tauxDePollution}%`;
+            // Mise à jour du texte
+            lifeBarText.textContent = `${life} / ${maxLife}`;
         }
-      }
     }
-  }
+
+
+    function updateTextStatus() {
+        // Parcourir chaque océan (index de 0 à 4)
+        for (let i = 0; i < oceans.length; i++) {
+            const el = document.getElementById(`pollutionBall${i}`);
+            if (el != null) {
+            // Mettre à jour la couleur de fond de l'élément en fonction du taux de pollution
+            el.style.backgroundColor = getBallColor(oceans[i].tauxDePollution);
+
+            // Accéder à l'élément contenant les statistiques détaillées
+            const elStats = document.getElementById(`stats-pollutionBall${i}`);
+            if (elStats != null) {
+                // Mettre à jour la température dans l'élément <strong> de température
+                const temperatureElement = elStats.querySelector("p strong:nth-of-type(1)");
+                if (temperatureElement != null) {
+                temperatureElement.textContent = `Température : ${oceans[i].temperature}°C`;
+                }
+
+                // Mettre à jour la superficie dans l'élément <strong> de superficie
+                const superficieElement = elStats.querySelector("p strong:nth-of-type(2)");
+                if (superficieElement != null) {
+                superficieElement.textContent = `Superficie : ${oceans[i].superficie} millions km²`;
+                }
+
+                // Mettre à jour le taux de pollution dans l'élément <strong> du taux de pollution
+                const pollutionElement = elStats.querySelector("p strong:nth-of-type(3)");
+                if (pollutionElement != null) {
+                pollutionElement.textContent = `Taux de Pollution : ${oceans[i].tauxDePollution}%`;
+                }
+            }
+        }
+    }
   
   // Affichage dans la console pour débogage
   console.log(oceans.map(ocean => ocean.tauxDePollution));
