@@ -40,8 +40,8 @@ function updateButton(response){
     const answer2 = document.getElementById("answer2")
     answer1.removeEventListener("click", answer1.clickHandler)
     answer2.removeEventListener("click", answer2.clickHandler)
-    answer1.clickHandler = () => checkButton(false, response)
-    answer2.clickHandler = () => checkButton(true, response)
+    answer1.clickHandler = () => checkButton(true, response)
+    answer2.clickHandler = () => checkButton(false, response)
     answer1.addEventListener("click", answer1.clickHandler)
     answer2.addEventListener("click", answer2.clickHandler)
 }
@@ -189,8 +189,5 @@ const getPollutionMalus = (oceans) => {
     }
     return pollutionSum * 5;
 };
-
-
-
 
 window.addEventListener('load', onLoad, false);
