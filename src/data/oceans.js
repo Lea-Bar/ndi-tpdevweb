@@ -36,7 +36,7 @@ export const oceans = [
       id: 4,
       nom: "Océan Arctique",
       temperature: "-1.5",
-      superficie: "15,56 millions km²",
+      superficie: "15,56",
       lien: "https://fr.wikipedia.org/wiki/Oc%C3%A9an_Arctique",
       tauxDePollution: 0, // Exemple de taux de pollution
     },

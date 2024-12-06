@@ -3,9 +3,8 @@ const { ocean } = Astro.props;
 ---
 
 <div class="ocean-stats">
-  <h3>Statistiques détaillées de {ocean.nom}</h3>
-  <p><strong></strong></br>
-  <strong></strong></br>
-  <strong></strong></br>
-  <a href={ocean.lien} target="_blank">En savoir plus</a></p>
+  <h3>Statistiques détaillées de <a href={ocean.lien} target="_blank">{ocean.nom}</a></h3>
+  <p><strong></strong>
+  <strong></strong>
+  <strong></strong></p>
 </div>

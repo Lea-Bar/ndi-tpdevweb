@@ -101,7 +101,7 @@ function removePollution(ocean) {
     updateTextStatus();
 }
 
-
+var img = null;
       // Charge et redimensionne l'image sur le canevas
 function loadCanvas() {
     const canvas = document.getElementById("gamecanvas");
@@ -109,7 +109,7 @@ function loadCanvas() {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
         const ctx = canvas.getContext("2d");
-        const img = new Image();
+        img = new Image();
         img.src = getMapBackground(getPollutionMoy());
         img.addEventListener("load", () => {
             if(ctx != null)ctx.drawImage(img, 0, 0, canvas.clientWidth, canvas.clientHeight);
@@ -136,8 +136,8 @@ function updateLifeBar() {
 
 function updateBackground() {
     var pollution = getPollutionMoy();
-    if (backgroundImage != null) {
-        backgroundImage.style.backgroundImage = getMapBackground(pollution); // Assurez-vous que `backgroundImage` est valide
+    if (img != null) {
+        img.src = getMapBackground(pollution); // Assurez-vous que `backgroundImage` est valide
     }
 }
 
@@ -147,9 +147,10 @@ function getPollutionMoy(){
 
 
   const getMapBackground = (pollution) => {
-    if (pollution >= 80) return "url('./img/mapb3.png')";  // Pollution élevée
-    if (pollution >= 40) return "url('./img/mapb2.png')";  // Pollution modérée
-    return "url('./img/mapb1.png')";                     // Pas de pollution
+    //return './img/mapv.png';
+    if (pollution >= 80) return './img/mapb3.png';  // Pollution élevée
+    if (pollution >= 40) return './img/mapb2.png';  // Pollution modérée
+    return './img/mapb1.png';                     // Pas de pollution
 };
 
 
@@ -184,7 +185,6 @@ function updateTextStatus() {
             }
         }
     }
-    console.log(oceans.map(ocean => ocean.tauxDePollution));
 }
 
 
