@@ -1,4 +1,22 @@
 function onLoad(){
+    loadCanvas()
+    loadQuestion()
+}
+
+function loadQuestion(){
+    setTimeout(() => {
+        console.log("lol")
+        axios.get("/api/randomQuestion").then(response => {
+            const data = response.data
+            document.getElementById("question").innerHTML = data.question;
+            document.getElementById("questionModal").style.display = "block"
+            document.getElementById("answer1").innerHTML = data.answerValues[0]
+            document.getElementById("answer2").innerHTML = data.answerValues[1]
+        })
+    }, ((Math.floor(Math.random()*1))+1)*1000)
+}
+
+function loadCanvas(){
     const canvas = document.getElementById("gamecanvas");
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
