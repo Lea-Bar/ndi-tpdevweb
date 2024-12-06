@@ -1,7 +1,11 @@
 ---
+import QuestionModal from "../components/QuestionModal.astro";
 import GameLayout from "../layouts/GameLayout.astro";
 ---
 
 <GameLayout>
-    <canvas id="gamecanvas"></canvas>
+    <div id="game-container">
+        <canvas id="gamecanvas"></canvas>
+        <QuestionModal></QuestionModal>
+    </div>
 </GameLayout>
