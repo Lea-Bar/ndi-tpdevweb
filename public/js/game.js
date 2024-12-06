@@ -18,7 +18,7 @@ updateLifeBar();
 //updateTextStatus();
 function loadQuestion() {
     // Calcul d'un timeout entre 20s (15000 ms) et 45s (35000 ms)
-    const timeoutDuration = Math.random() * (35000 - 15000) + 15000;
+    const timeoutDuration = Math.random() * (25000 - 15000) + 15000;
 
     setTimeout(() => {
         axios.get("/api/randomQuestion").then(response => {
@@ -27,7 +27,7 @@ function loadQuestion() {
             document.getElementById("questionModal").style.display = "block";
             document.getElementById("answer1").innerHTML = data.answerValues[0];
             document.getElementById("answer2").innerHTML = data.answerValues[1];
-            document.getElementById("hint").innerHTML = `<a href="${data.hint}">Aide</a>`;
+            document.getElementById("hint").innerHTML = `<a href="${data.hint}" target="_blank">Aide</a>`;
             updateButton(data.answer);
         });
     }, timeoutDuration);
@@ -80,21 +80,22 @@ function getRandomOcean(){
     return oceans[Math.floor(Math.random() * oceans.length)];
 }
 
-function addPollution(ocean){
-    ocean.tauxDePollution = ocean.tauxDePollution + (Math.random() * 20);
-    if(ocean.tauxDePollution > 100){
+function addPollution(ocean) {
+    ocean.tauxDePollution = ocean.tauxDePollution + (Math.floor(Math.random() * (20 - 8 + 1)) + 8);
+    if (ocean.tauxDePollution > 100) {
         ocean.tauxDePollution = 100;
     }
     updateTextStatus();
 }
 
-function removePollution(ocean){
-    ocean.tauxDePollution = ocean.tauxDePollution + (Math.random() * 20);
-    if(ocean.tauxDePollution > 100){
-        ocean.tauxDePollution = 100;
+function removePollution(ocean) {
+    ocean.tauxDePollution = ocean.tauxDePollution - (Math.floor(Math.random() * (20 - 8 + 1)) + 8); // Subtracting pollution
+    if (ocean.tauxDePollution < 0) {
+        ocean.tauxDePollution = 0; // Ensure pollution doesn't go below 0
     }
     updateTextStatus();
 }
+
 
       // Charge et redimensionne l'image sur le canevas
 function loadCanvas() {
@@ -104,7 +105,7 @@ function loadCanvas() {
         canvas.height = window.innerHeight;
         const ctx = canvas.getContext("2d");
         const img = new Image();
-        img.src = "/img/mapv.png";
+        img.src = getMapBackground(getPollutionMoy());
         img.addEventListener("load", () => {
             if(ctx != null)ctx.drawImage(img, 0, 0, canvas.clientWidth, canvas.clientHeight);
         });
@@ -128,12 +129,24 @@ function updateLifeBar() {
 }
 
 
-function updateBackground(){
-    var polution = (oceans[0].tauxDePollution + oceans[1].tauxDePollution + oceans[2].tauxDePollution + oceans[3].tauxDePollution + oceans[4].tauxDePollution) / 5;
-    if(backgroundImage != null){
-        backgroundImage.style.backgroundColor = getBallColor(polution);
+function updateBackground() {
+    var pollution = getPollutionMoy();
+    if (backgroundImage != null) {
+        backgroundImage.style.backgroundImage = getMapBackground(pollution); // Assurez-vous que `backgroundImage` est valide
     }
-  }
+}
+
+function getPollutionMoy(){
+    return (oceans[0].tauxDePollution + oceans[1].tauxDePollution + oceans[2].tauxDePollution + oceans[3].tauxDePollution + oceans[4].tauxDePollution) / 5;
+}
+
+
+  const getMapBackground = (pollution) => {
+    if (pollution >= 80) return "url('./img/mapb3.png')";  // Pollution élevée
+    if (pollution >= 40) return "url('./img/mapb2.png')";  // Pollution modérée
+    return "url('./img/mapb1.png')";                     // Pas de pollution
+};
+
 
 function updateTextStatus() {
     // Parcourir chaque océan (index de 0 à 4)
@@ -177,16 +190,6 @@ const getBallColor = (pollution) => {
     if (pollution >= 40) return "orange";  // Pollution modérée
     if (pollution >= 20) return "yellow";  // Pollution faible
     return "darkgreen";                    // Pas de pollution
-};
-
-
-const getMapBackground = (pollution) => {
-    if (pollution >= 100) return "mapw6";  // Très haute pollution
-    if (pollution >= 80) return "mapw5";    // Pollution élevée
-    if (pollution >= 60) return "mapw4";     // Pollution élevée
-    if (pollution >= 40) return "mapw3";  // Pollution modérée
-    if (pollution >= 20) return "mapw2";  // Pollution faible
-    return "mapw1";                    // Pas de pollution
 };
 
 
