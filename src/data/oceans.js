@@ -5,7 +5,7 @@ export const oceans = [
       nom: "Océan Pacifique",
       temperature: "25",
       superficie: "168,72",
-      lien: "https://example.com/ocean-pacifique",
+      lien: "https://fr.wikipedia.org/wiki/Oc%C3%A9an_Pacifique",
       tauxDePollution: 0, // Exemple de taux de pollution
     },
     {
@@ -13,7 +13,7 @@ export const oceans = [
       nom: "Océan Atlantique",
       temperature: "14",
       superficie: "106,46",
-      lien: "https://example.com/ocean-atlantique",
+      lien: "https://fr.wikipedia.org/wiki/Oc%C3%A9an_Atlantique",
       tauxDePollution: 0, // Exemple de taux de pollution
     },
     {
@@ -21,7 +21,7 @@ export const oceans = [
       nom: "Océan Indien",
       temperature: "22",
       superficie: "70,56",
-      lien: "https://example.com/ocean-indien",
+      lien: "https://fr.wikipedia.org/wiki/Oc%C3%A9an_Indien",
       tauxDePollution: 0, // Exemple de taux de pollution
     },
     {
@@ -29,7 +29,7 @@ export const oceans = [
       nom: "Océan Austral",
       temperature: "-2",
       superficie: "21,96",
-      lien: "https://example.com/ocean-austral",
+      lien: "https://fr.wikipedia.org/wiki/Oc%C3%A9an_Austral",
       tauxDePollution: 0, // Exemple de taux de pollution
     },
     {
@@ -37,7 +37,7 @@ export const oceans = [
       nom: "Océan Arctique",
       temperature: "-1.5",
       superficie: "15,56 millions km²",
-      lien: "https://example.com/ocean-arctique",
+      lien: "https://fr.wikipedia.org/wiki/Oc%C3%A9an_Arctique",
       tauxDePollution: 0, // Exemple de taux de pollution
     },
   ];
