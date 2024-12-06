@@ -12,10 +12,10 @@ let finish = false;
 const backgroundImage = document.getElementById("game-container");
 
 setInterval(updateBackground, 200);
-setInterval(updateTextStatus, 2000);
+//setInterval(updateTextStatus, 2000);
 setInterval(loosePointSeconds, 200);
 updateLifeBar();
-
+//updateTextStatus();
 function loadQuestion() {
     // Calcul d'un timeout entre 20s (15000 ms) et 45s (35000 ms)
     const timeoutDuration = Math.random() * (35000 - 15000) + 15000;
@@ -49,11 +49,13 @@ function updateButton(response){
 function checkButton(state, response){
     if(state == response){
         life = life + 300;
+        removePollution(getRandomOcean());
         if(life > maxLife){
             life = maxLife;
         }
     }else{
         life = life - 300;
+        addPollution(getRandomOcean());
         if(life < 0){
             alert("Tu es mort comme la nature");
             finish = true;
@@ -66,13 +68,33 @@ function checkButton(state, response){
 
 function loosePointSeconds(){
     if(finish){ return;}
-    life = life - 1;
+    life = life - (1 + getPollutionMalus(oceans));
     updateLifeBar();
     if(life < 0){
         alert("Tu es mort comme la nature");
         finish = true;
     }
-  }
+}
+
+function getRandomOcean(){
+    return oceans[Math.floor(Math.random() * oceans.length)];
+}
+
+function addPollution(ocean){
+    ocean.tauxDePollution = ocean.tauxDePollution + (Math.random() * 20);
+    if(ocean.tauxDePollution > 100){
+        ocean.tauxDePollution = 100;
+    }
+    updateTextStatus();
+}
+
+function removePollution(ocean){
+    ocean.tauxDePollution = ocean.tauxDePollution + (Math.random() * 20);
+    if(ocean.tauxDePollution > 100){
+        ocean.tauxDePollution = 100;
+    }
+    updateTextStatus();
+}
 
       // Charge et redimensionne l'image sur le canevas
 function loadCanvas() {
@@ -155,6 +177,17 @@ const getBallColor = (pollution) => {
     if (pollution >= 40) return "orange";  // Pollution modérée
     if (pollution >= 20) return "yellow";  // Pollution faible
     return "darkgreen";                    // Pas de pollution
+};
+
+
+const getPollutionMalus = (oceans) => {
+    let pollutionSum = 0;
+    for (let ocean of oceans) {
+        if(ocean.tauxDePollution == 100){
+            pollutionSum+=1;
+        }
+    }
+    return pollutionSum * 5;
 };
 
 
