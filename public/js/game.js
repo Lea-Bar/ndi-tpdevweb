@@ -12,7 +12,7 @@ let finish = false;
 const backgroundImage = document.getElementById("game-container");
 
 setInterval(updateBackground, 200);
-//setInterval(updateTextStatus, 2000);
+setInterval(updateTextStatus, 500);
 setInterval(loosePointSeconds, 200);
 updateLifeBar();
 //updateTextStatus();
@@ -21,6 +21,7 @@ function loadQuestion() {
     const timeoutDuration = Math.random() * (25000 - 15000) + 15000;
 
     setTimeout(() => {
+        if(finish){ return;}
         axios.get("/api/randomQuestion").then(response => {
             const data = response.data;
             document.getElementById("question").innerHTML = data.question;
@@ -81,7 +82,9 @@ function getRandomOcean(){
 }
 
 function addPollution(ocean) {
-    ocean.tauxDePollution = ocean.tauxDePollution + (Math.floor(Math.random() * (40 - 10 + 1)) + 10);
+    let polValue = (Math.floor(Math.random() * (40 - 10 + 1)) + 10);
+    alert(ocean.nom + " a été polué de "+polValue+"%");
+    ocean.tauxDePollution = ocean.tauxDePollution + polValue;
     if (ocean.tauxDePollution > 100) {
         ocean.tauxDePollution = 100;
     }
@@ -89,7 +92,9 @@ function addPollution(ocean) {
 }
 
 function removePollution(ocean) {
-    ocean.tauxDePollution = ocean.tauxDePollution - (Math.floor(Math.random() * (40 - 10 + 1)) + 10); // Subtracting pollution
+    let polValue = (Math.floor(Math.random() * (40 - 10 + 1)) + 10);
+    alert(ocean.nom + " a été dépolué de "+polValue+"%");
+    ocean.tauxDePollution = ocean.tauxDePollution - polValue;
     if (ocean.tauxDePollution < 0) {
         ocean.tauxDePollution = 0; // Ensure pollution doesn't go below 0
     }
