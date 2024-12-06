@@ -53,6 +53,8 @@ const positions = [
       })}
     </div>
     <script>
+        import { oceans } from "../data/oceans";
+        
       // Charge et redimensionne l'image sur le canevas
       function onLoad() {
         const canvas = document.getElementById("gamecanvas") as HTMLCanvasElement;
@@ -61,13 +63,74 @@ const positions = [
             canvas.height = window.innerHeight;
             const ctx = canvas.getContext("2d");
             const img = new Image();
-            img.src = "/img/map.png";
+            img.src = "/img/mapv.png";
             img.addEventListener("load", () => {
                 if(ctx != null)ctx.drawImage(img, 0, 0, canvas.clientWidth, canvas.clientHeight);
             });
          }
       }
       window.addEventListener("load", onLoad, false);
+
+      const backgroundImage = document.getElementById("game-container");
+
+      setInterval(updateBackground, 200);
+      setInterval(updateTextStatus, 2000);
+      
+      function updateBackground(){
+        var polution = (oceans[0].tauxDePollution + oceans[1].tauxDePollution + oceans[2].tauxDePollution + oceans[3].tauxDePollution + oceans[4].tauxDePollution) / 5;
+        if(backgroundImage != null){
+            backgroundImage.style.backgroundColor = getBallColor(polution);
+        }
+      }
+
+      function updateTextStatus() {
+  // Parcourir chaque océan (index de 0 à 4)
+  for (let i = 0; i < oceans.length; i++) {
+    const el = document.getElementById(`pollutionBall${i}`);
+    if (el != null) {
+      // Mettre à jour la couleur de fond de l'élément en fonction du taux de pollution
+      el.style.backgroundColor = getBallColor(oceans[i].tauxDePollution);
+
+      // Accéder à l'élément contenant les statistiques détaillées
+      const elStats = document.getElementById(`stats-pollutionBall${i}`);
+      if (elStats != null) {
+        // Mettre à jour la température dans l'élément <strong> de température
+        const temperatureElement = elStats.querySelector("p strong:nth-of-type(1)");
+        if (temperatureElement != null) {
+          temperatureElement.textContent = `Température : ${oceans[i].temperature}°C`;
+        }
+
+        // Mettre à jour la superficie dans l'élément <strong> de superficie
+        const superficieElement = elStats.querySelector("p strong:nth-of-type(2)");
+        if (superficieElement != null) {
+          superficieElement.textContent = `Superficie : ${oceans[i].superficie} millions km²`;
+        }
+
+        // Mettre à jour le taux de pollution dans l'élément <strong> du taux de pollution
+        const pollutionElement = elStats.querySelector("p strong:nth-of-type(3)");
+        if (pollutionElement != null) {
+          pollutionElement.textContent = `Taux de Pollution : ${oceans[i].tauxDePollution}%`;
+        }
+      }
+    }
+  }
+  
+  // Affichage dans la console pour débogage
+  console.log(oceans.map(ocean => ocean.tauxDePollution));
+}
+
+
+
+
+      const getBallColor = (pollution: number) => {
+        if (pollution >= 100) return "black";  // Très haute pollution
+        if (pollution >= 80) return "grey";    // Pollution élevée
+        if (pollution >= 60) return "red";     // Pollution élevée
+        if (pollution >= 40) return "orange";  // Pollution modérée
+        if (pollution >= 20) return "yellow";  // Pollution faible
+        return "darkgreen";                    // Pas de pollution
+        };
+
     </script>
   </body>
 </html>
