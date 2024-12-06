@@ -180,6 +180,16 @@ const getBallColor = (pollution) => {
 };
 
 
+const getMapBackground = (pollution) => {
+    if (pollution >= 100) return "mapw6";  // Très haute pollution
+    if (pollution >= 80) return "mapw5";    // Pollution élevée
+    if (pollution >= 60) return "mapw4";     // Pollution élevée
+    if (pollution >= 40) return "mapw3";  // Pollution modérée
+    if (pollution >= 20) return "mapw2";  // Pollution faible
+    return "mapw1";                    // Pas de pollution
+};
+
+
 const getPollutionMalus = (oceans) => {
     let pollutionSum = 0;
     for (let ocean of oceans) {
