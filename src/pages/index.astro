@@ -16,11 +16,15 @@ import Layout from '../layouts/Layout.astro';
 					<p>					
 						Bienvenue dans Seastem Inc. !
 						Dans un monde où le respect de l’environnement n’est pas au rendez-vous, votre mission sera de prendre les bonnes décisions afin de maintenir en état nos océans 🌊
-
+					</p><br>
+					<p>
 						Chaque océan dispose d’une barre de vie qui se réduit au fil du temps, pour qu’un océan regagne de la vie, vous devrez prendre une décision qui sera présentée sous la forme d’une question. 
 						Mais attention, si vous faites une mauvaise décision, l’océan perd davantage de vie !
 					</p>
-				</article>
+				</article><br><br>
+				<center>
+					<a href="try">Jouer</a>
+				</center>
 			</section>
 		</main>
 	</div>
@@ -29,6 +33,19 @@ import Layout from '../layouts/Layout.astro';
 		article p {
 			margin-left: 30%;
 			margin-right: 30%;
+		}
+
+		a{
+			padding: 1em;
+			background-color: darkcyan;
+			border-radius: 24px;
+			text-decoration: none;
+			color: white;
+			border-style: groove;
+		}
+
+		a:hover{
+			background-color: rgba(0, 139, 139, 0.51);
 		}
 	</style>
 </Layout>
