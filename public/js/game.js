@@ -3,29 +3,36 @@ import { oceans } from "../src/data/oceans.js"; // Liste des océans
 function onLoad(){
     loadQuestion();
     loadCanvas();
-
-    window.life = 1500;
-    window.maxLife = 1500;
 }
+
+let life = 1500;
+const maxLife = 1500;
+let finish = false;
 
 const backgroundImage = document.getElementById("game-container");
 
 setInterval(updateBackground, 200);
 setInterval(updateTextStatus, 2000);
 setInterval(loosePointSeconds, 200);
+updateLifeBar();
 
-function loadQuestion(){
+function loadQuestion() {
+    // Calcul d'un timeout entre 20s (15000 ms) et 45s (35000 ms)
+    const timeoutDuration = Math.random() * (35000 - 15000) + 15000;
+
     setTimeout(() => {
         axios.get("/api/randomQuestion").then(response => {
-            const data = response.data
+            const data = response.data;
             document.getElementById("question").innerHTML = data.question;
-            document.getElementById("questionModal").style.display = "block"
-            document.getElementById("answer1").innerHTML = data.answerValues[0]
-            document.getElementById("answer2").innerHTML = data.answerValues[1]
-            updateButton(data.answer)
-        })
-    }, ((Math.floor(Math.random()*1))+20)*1)
+            document.getElementById("questionModal").style.display = "block";
+            document.getElementById("answer1").innerHTML = data.answerValues[0];
+            document.getElementById("answer2").innerHTML = data.answerValues[1];
+            document.getElementById("hint").innerHTML = `<a href="${data.hint}">Aide</a>`;
+            updateButton(data.answer);
+        });
+    }, timeoutDuration);
 }
+
 
 
 function updateButton(response){
@@ -41,26 +48,29 @@ function updateButton(response){
 
 function checkButton(state, response){
     if(state == response){
-        window.life = window.life + 300;
-        if(window.life > window.maxLife){
-            window.life = window.maxLife;
+        life = life + 300;
+        if(life > maxLife){
+            life = maxLife;
         }
     }else{
-        window.life = window.life - 300;
-        if(window.life < 0){
+        life = life - 300;
+        if(life < 0){
             alert("Tu es mort comme la nature");
+            finish = true;
         }
     }
-    updateLifeBar(window.life, window.lifeMax);
+    updateLifeBar();
     document.getElementById("questionModal").style.display = "none"
     loadQuestion()
 }
 
 function loosePointSeconds(){
-    window.life = window.life - 1;
-    updateLifeBar(window.life, window.lifeMax);
-    if(window.life < 0){
+    if(finish){ return;}
+    life = life - 1;
+    updateLifeBar();
+    if(life < 0){
         alert("Tu es mort comme la nature");
+        finish = true;
     }
   }
 
@@ -79,7 +89,7 @@ function loadCanvas() {
     }
 }
 
-function updateLifeBar(life, maxLife) {
+function updateLifeBar() {
     const lifeBar = document.getElementById('life-bar');
     const lifeBarText = document.getElementById('life-bar-text');
 

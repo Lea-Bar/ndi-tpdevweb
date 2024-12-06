@@ -7,7 +7,8 @@ export async function GET({params, request}) {
         JSON.stringify({
             "question" : q.question,
             "answer" : q.answer,
-            "answerValues" : q.answerValues
+            "answerValues" : q.answerValues,
+            "hint" : q.hint
         })
     )
 }
