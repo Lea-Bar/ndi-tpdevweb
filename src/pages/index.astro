@@ -4,6 +4,9 @@ import Layout from '../layouts/Layout.astro';
 
 <Layout>
 	<div id="container">
+		<div class="center">
+			<img class="logo" src="/img/logo.png">
+		</div>
 		<main>
 			<section id="intro">
 				<center>
@@ -25,6 +28,7 @@ import Layout from '../layouts/Layout.astro';
 				<center>
 					<a href="try">Jouer</a>
 				</center>
+				<p class="credit">Credit : Cyprien Freville, Malori Alvarez, Lea Bar, Florine Lefebvre</p>
 			</section>
 		</main>
 	</div>
@@ -46,6 +50,23 @@ import Layout from '../layouts/Layout.astro';
 
 		a:hover{
 			background-color: rgba(0, 139, 139, 0.51);
+		}
+
+		p.credit {
+			margin-top: 50px;
+			font-size: 13px;
+			text-align: center;
+		}
+
+		img.logo {
+			height: 250px;
+			width: auto;
+		}
+
+		div.center{
+			display: flex;
+			align-items: center;
+			justify-content: center;
 		}
 	</style>
 </Layout>
