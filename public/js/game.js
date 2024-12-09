@@ -1,3 +1,5 @@
+import { oceans } from "./oceans.js"; // Liste des océans
+
 function onLoad(){
     loadQuestion();
     loadCanvas();
